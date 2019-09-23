@@ -44,7 +44,7 @@ for book in released_books:
 # Delete record
 new_book.delete()
 
-# Find a record by id. Create record with given id and values, if the record wasn't found
+# Find a record by id or create one with given id and values if it wasn't found
 book = Book.find_or_create(new_book.id, **new_book.entity)
 print(book.title)
 ```
@@ -53,7 +53,7 @@ print(book.title)
 `IntegerField`  `FloatField`  `BooleanField`  `StringField`  `DatatimeField`  
 `ListField`  `DictField`  
 `EmbeddedField`  
-Custom itterable fields can be created by inheriting `ComplexBaseField`, and non itterable by inheriting `BaseField`  
+Custom iterable fields can be created by inheriting `ComplexBaseField`, and non-iterable by inheriting `BaseField`  
 
 
 ## Field arguments
@@ -80,8 +80,8 @@ class Book(Kind):
     _p_lock = True # To activate
     ...
 ```
-#### Custom kind name
-By default kind name is retrieved from class name of an instance, but you can specify your own
+#### Custom Kind
+By default, a `Kind` is retrieved from class name of an instance, but you can specify your own
 ```python
 class Book(Kind):
     _kind = "notbook"
