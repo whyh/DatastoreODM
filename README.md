@@ -1,5 +1,5 @@
-# datastore_orm
-### Basic ODM for Cloud Firestore in Datastore mode
+# DatastoreORM
+### Simple ODM for Cloud Firestore in Datastore mode
 
 Created to ease usage of the official client by structuring data with Django-like constructor
 
