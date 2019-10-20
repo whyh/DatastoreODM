@@ -1,2 +1,0 @@
-class RecordNotFound(Exception):
-    pass
