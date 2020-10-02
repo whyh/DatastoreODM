@@ -5,7 +5,7 @@ Created to ease usage of the official client by structuring data with Django-lik
 
 ## How to use
 ```python
-from orm import Kind, db
+from orm import Kind
 
 # Create scheme
 class Book(Kind):
