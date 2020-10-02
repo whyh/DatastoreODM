@@ -30,30 +30,33 @@ print(new_book.id)
 new_book.author.name = "Osamu Dazai"
 
 # Upsert entity (Create / Update)
-new_book.save()
+await new_book.save()
 
 # Find record by id
-book = Book.find(new_book.id)
+book = await Book.find(new_book.id)
 print(book.title)
 
 # Query database
 released_books = Book.find_where(released=True, language="ja", _quantity=3)
-for book in released_books:
+async for book in released_books:
     print(book.title)
 
 # Delete record
-new_book.delete()
+await new_book.delete()
 
 # Find a record by id or create one with given id and values if it wasn't found
-book = Book.find_or_create(new_book.id, **new_book.entity)
+book = await Book.find_or_create(new_book.id, **new_book.entity)
 print(book.title)
 ```
 
-## Supported fields
-`IntegerField`  `FloatField`  `BooleanField`  `StringField`  `DatatimeField`  
-`ListField`  `DictField`  
-`EmbeddedField`  
-Custom iterable fields can be created by inheriting `ComplexBaseField`, and non-iterable by inheriting `BaseField`  
+## Supported field types
+Regular `IntegerField`  `FloatField`  `BooleanField`  `StringField`  `DatatimeField`. Custom types can be created by inheriting `BaseField`
+
+
+Iterable `ListField`  `DictField`. Custom types can be created by inheriting `ComplexBaseField`
+
+
+Special `EmbeddedField`  
 
 
 ## Field arguments
@@ -65,30 +68,30 @@ Custom iterable fields can be created by inheriting `ComplexBaseField`, and non-
     Type `Callable[[Any], bool]`. Default `lambda _: True`  
 
 ## Few cool features
-#### Transaction wrapper
+#### Transaction decorator
 Comfortable way of performing atomic mutations
 ```python
 @db.transaction(retry=True, retry_timeout=1)
-def cleanup(*args, batch, **kwargs) -> Any:
+async def cleanup(*args, batch, **kwargs) -> Any:
     # perform mutations
     return # something
 ```
 #### Pessimistic lock
-Seamless pessimistic lock on reading(using the ORM). Definatly not best practice, but sometimes quite usefull
+Seamless pessimistic lock on reading (while using the ODM)
 ```python
 class Book(Kind):
     _p_lock = True # To activate
     ...
 ```
-#### Custom Kind
-By default, a `Kind` is retrieved from class name of an instance, but you can specify your own
+#### Custom Kind name
+By default, the `Kind` is retrieved from class name of an instance, but you can specify your own name
 ```python
 class Book(Kind):
-    _kind = "notbook"
+    _kind = "notabook"
     ...
 ```
 #### Inheritance
-`Kind` and `EmbeddedBaseField` children are safe to inherit from in a linear fashion
+`Kind` and `EmbeddedBaseField` support both liniar and multiple inheritance 
 ```python
 class Book(Kind):
     title = StringField()
