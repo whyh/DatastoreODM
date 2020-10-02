@@ -67,7 +67,7 @@ Special `EmbeddedField`
 - `valid` Function to validate a value  
     Type `Callable[[Any], bool]`. Default `lambda _: True`  
 
-## Few cool features
+## Features
 #### Transaction decorator
 Comfortable way of performing atomic mutations
 ```python
