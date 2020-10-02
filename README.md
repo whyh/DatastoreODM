@@ -1,5 +1,5 @@
 # DatastoreODM
-### Async ODM for Google Cloud Firestore in Datastore mode
+### Async ODM for Google Cloud Datastore (Firebase in Datastore mode)
 
 Created to ease usage of the official client by structuring data with Django-like constructor
 
